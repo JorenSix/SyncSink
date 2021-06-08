@@ -1,0 +1,60 @@
+h1. SyncSink - Synchronize media files 
+
+Panako has also uses for synchronization of data-streams. For those applications please see the article titled "Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment":http://0110.be/posts/Synchronizing_Multimodal_Recordings_Using_Audio-To-Audio_Alignment_-_In_Journal_on_Multimodal_User_Interfaces.
+
+h3(#sync). Synchronize media files
+
+This operation extracts fingerprints from a reference media file and returns how much time offset there is to other files with similar audio. This is practical to synchronize video  streams with similar audio or recordings of the same performance from several microphones.
+
+The synchonize option uses a two stage algorithm. First fingerprints are extracted from the media files. With these it is checked if the media files contain similar audio. If they do, a rough offset is determined (e.g. with 8ms accuracy). Subsequently crosscovariance of one audio frame is used to improve the offset estimation. This offset is returned.
+
+bc. syncsink reference.avi other.mkv other.mp3
+
+h3(#syncsink). Synchronize Sensor Streams with SyncSink
+
+This command starts a Swing user interface to synchronize several audio/video and data files. The aim is to make it easy to synchronize various media files and to allow synchronization of sensor data streams. Syncronization of sensor streams can be done effectively if for each sensor stream there is a corresponding synchronized ambient audio recording. The problem of synchronizing sensor streams is then reduced to audio-to-audio alignment. The SyncSink facilitates this type of data-stream synchronization.
+
+The synchonize option uses a two stage algorithm. First fingerprints are extracted from the media files. With these it is checked if the media files contain similar audio. If they do, a rough offset is determined (e.g. with 32ms accuracy). Subsequently crosscovariance of one audio frame is used to improve the offset estimation. This offset is returned.
+
+<div align="center">
+!./media/SyncSink-synchronizing_audio.gif(Synchronizing audio with the SyncSink user interface)!
+<small>Fig. Synchronizing audio with the SyncSink user interface.</small></div>
+
+To use the application start it with @panako syncsink@. Subsequently add various audio or video files using drag and drop. If the same audio is found in the various media files a timebox plot appears, as in the screenshot below. To add corresponding data-files click one of the boxes on the timeline and choose a data file that is synchronized with the audio. The datafile should be a CSV-file. The separator should be ',' and the first column should contain a timestamp in fractional seconds. After pressing @Sync@ a new CSV-file is created with the first column containing correctly shifted time stamps. If this is done for multiple files, a synchronized sensor-stream is created. Also, "ffmpeg":https://www.ffmpeg.org/ commands to syncronize the media files themselves are printed to the command line.
+
+
+h2(#read). Further Reading
+
+Some relevant reading material concerning SyncSink. 
+
+# Six, Joren and Leman, Marc "__Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment__" (2015)
+# Six, Joren and Leman, Marc "__Panako - A Scalable Acoustic Fingerprinting System Handling Time-Scale and Pitch Modification__":http://www.terasoft.com.tw/conf/ismir2014/proceedings/T048_122_Paper.pdf (2014)
+# Wang, Avery L. __An Industrial-Strength Audio Search Algorithm__ (2003)
+# Ellis, Dan and Whitman, Brian and Porter, Alastair __Echoprint - An Open Music Identification Service__ (2011)
+# Sonnleitner, Reinhard  and Widmer, Gerhard __Quad-based Audio Fingerprinting Robust To Time And Frequency Scaling__ (2014)
+
+
+h3. Requirements
+
+To use SyncSink @ffmpeg@ is required to decode and transform audio/video material.
+
+
+h2(#credits). Credits
+
+The SyncSink software was developed at "IPEM, Ghent University":http://www.ipem.ugent.be/ by Joren Six.
+
+If you use the synchronization algorithms for research purposes, please cite the following work:
+
+bc. @article{six2015multimodal,
+  author      = {Joren Six and Marc Leman},
+  title       = {{Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment}},
+  issn        = {1783-7677},
+  volume      = {9},
+  number      = {3},
+  pages       = {223-229},
+  doi         = {10.1007/s12193-015-0196-1},
+  journal     = {{Journal of Multimodal User Interfaces}}, 
+  publisher   = {Springer Berlin Heidelberg},
+  year        = 2015
+}
+
