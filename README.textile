@@ -40,11 +40,6 @@ Some relevant reading material concerning SyncSink.
 # Sonnleitner, Reinhard  and Widmer, Gerhard __Quad-based Audio Fingerprinting Robust To Time And Frequency Scaling__ (2014)
 
 
-h3. Requirements
-
-To use SyncSink @ffmpeg@ is required to decode and transform audio/video material.
-
-
 h2(#credits). Credits
 
 The SyncSink software was developed at "IPEM, Ghent University":http://www.ipem.ugent.be/ by Joren Six.
