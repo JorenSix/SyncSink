@@ -2,6 +2,10 @@ h1. SyncSink - Synchronize media files
 
 SyncSink is a tool to synchronize media files with shared audio. SyncSink matches and aligns shared audio and determines offsets in seconds. With these precise offsets it becomes trival to sync files. SyncSink is, for example, used to synchronize video files: when you have many video captures of the same event, the audio attached to these video captures is used to align and sync multiple (independently operated) cameras. Evidently, SyncSink can also synchronize audio captured from many (independent) microphones if some environmental sound is shared (leaked in) the recordings.  
 
+<div align="center">
+!./media/SyncSink-synchronizing_audio.gif(Synchronizing audio with the SyncSink user interface)!
+<small>Fig. Synchronizing audio with the SyncSink user interface.</small></div>
+
 
 SyncSink has also uses to synchronization of data-streams. For those applications please see the article titled "Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment":http://0110.be/posts/Synchronizing_Multimodal_Recordings_Using_Audio-To-Audio_Alignment_-_In_Journal_on_Multimodal_User_Interfaces.
 
@@ -18,9 +22,7 @@ First you will need to install ffmpeg and a recent "JRE":https://adoptopenjdk.ne
 
 bc. apt-get install ffmpeg
 
-<div align="center">
-!./media/SyncSink-synchronizing_audio.gif(Synchronizing audio with the SyncSink user interface)!
-<small>Fig. Synchronizing audio with the SyncSink user interface.</small></div>
+
 
 After installing ffmpeg and a JRE, SyncSink can be started by double clicking the latest "JAR file":https://github.com/JorenSix/SyncSink/raw/main/build/syncsink-1.0.jar. If that does not work you can use the command line: @java -jar syncsink.jar@. 
 
