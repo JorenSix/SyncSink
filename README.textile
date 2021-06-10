@@ -1,26 +1,30 @@
-h1. SyncSink - Synchronize media files 
+h1. SyncSink - Synchronize media files
 
-Panako has also uses for synchronization of data-streams. For those applications please see the article titled "Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment":http://0110.be/posts/Synchronizing_Multimodal_Recordings_Using_Audio-To-Audio_Alignment_-_In_Journal_on_Multimodal_User_Interfaces.
+SyncSink is a tool to synchronize media files with shared audio. SyncSink matches and aligns shared audio and determines offsets in seconds. With these precise offsets it becomes trival to sync files. SyncSink is, for example, used to synchronize video files: when you have many video captures of the same event, the audio attached to these video captures is used to align and sync multiple (independently operated) cameras. Evidently, SyncSink can also synchronize audio captured from many (independent) microphones if some environmental sound is shared (leaked in) the recordings.  
 
-h3(#sync). Synchronize media files
 
-This operation extracts fingerprints from a reference media file and returns how much time offset there is to other files with similar audio. This is practical to synchronize video  streams with similar audio or recordings of the same performance from several microphones.
+SyncSink has also uses to synchronization of data-streams. For those applications please see the article titled "Synchronizing Multimodal Recordings Using Audio-To-Audio Alignment":http://0110.be/posts/Synchronizing_Multimodal_Recordings_Using_Audio-To-Audio_Alignment_-_In_Journal_on_Multimodal_User_Interfaces.
 
-The synchonize option uses a two stage algorithm. First fingerprints are extracted from the media files. With these it is checked if the media files contain similar audio. If they do, a rough offset is determined (e.g. with 8ms accuracy). Subsequently crosscovariance of one audio frame is used to improve the offset estimation. This offset is returned.
+h3(#sync). How does SyncSink synchronize media files? 
 
-bc. syncsink reference.avi other.mkv other.mp3
+The first step is to extract fingerprints from a reference media file. Subsequently fingerprints are extracted from other media files and a rough offset is determined. The rough offset determines how much the 'other' file needs to shift to match the reference. The rough offset is accurate to about 8ms. 
 
-h3(#syncsink). Synchronize Sensor Streams with SyncSink
+To improve the rough offset crosscovariance between the refrence and other audio is calculated. Since we already have a rough offset we know where audio is likely to match so we can reduce the amount of crosscovariance calculations, which are computationally intensive. In the ideal case the crosscovariance is stable and improves the offset up to audio-sample accuracy.
 
-This command starts a Swing user interface to synchronize several audio/video and data files. The aim is to make it easy to synchronize various media files and to allow synchronization of sensor data streams. Syncronization of sensor streams can be done effectively if for each sensor stream there is a corresponding synchronized ambient audio recording. The problem of synchronizing sensor streams is then reduced to audio-to-audio alignment. The SyncSink facilitates this type of data-stream synchronization.
 
-The synchonize option uses a two stage algorithm. First fingerprints are extracted from the media files. With these it is checked if the media files contain similar audio. If they do, a rough offset is determined (e.g. with 32ms accuracy). Subsequently crosscovariance of one audio frame is used to improve the offset estimation. This offset is returned.
+h3(#syncsink). How to use SyncSink
+
+First you will need to install ffmpeg and a recent "JRE":https://adoptopenjdk.net/releases.html. SyncSink decodes audio using by calling @ffmpeg@. On a Debian like system you can use apt-get to install @ffmpeg@, brew on macOS is similar:
+
+bc. apt-get install ffmpeg
 
 <div align="center">
 !./media/SyncSink-synchronizing_audio.gif(Synchronizing audio with the SyncSink user interface)!
 <small>Fig. Synchronizing audio with the SyncSink user interface.</small></div>
 
-To use the application start it with @panako syncsink@. Subsequently add various audio or video files using drag and drop. If the same audio is found in the various media files a timebox plot appears, as in the screenshot below. To add corresponding data-files click one of the boxes on the timeline and choose a data file that is synchronized with the audio. The datafile should be a CSV-file. The separator should be ',' and the first column should contain a timestamp in fractional seconds. After pressing @Sync@ a new CSV-file is created with the first column containing correctly shifted time stamps. If this is done for multiple files, a synchronized sensor-stream is created. Also, "ffmpeg":https://www.ffmpeg.org/ commands to syncronize the media files themselves are printed to the command line.
+After installing ffmpeg and a JRE, SyncSink can be started by double clicking the latest "JAR file":https://github.com/JorenSix/SyncSink/raw/main/build/syncsink-1.0.jar. If that does not work you can use the command line: @java -jar syncsink.jar@. 
+
+Once started, add various audio or video files using drag and drop. Similarly to the screencapture above. If the same audio is found in the various media files a timebox plot appears with a calculated offset. To sync the media files, pres the @Sync!@ button. In the messages window "ffmpeg":https://www.ffmpeg.org/ commands can be found to syncronize the media files. The commands are also printed on standard out.
 
 
 h2(#read). Further Reading
